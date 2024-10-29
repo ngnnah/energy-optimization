@@ -278,6 +278,7 @@ def generate_project_dashboard():
             <a href="https://github.com/ngnnah/energy-optimization" class="btn btn-primary" target="_blank">
                 <i class="fab fa-github"></i> View on GitHub
             </a>
+            
         </div>
 
         <!-- Metrics Section -->
