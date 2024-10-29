@@ -246,7 +246,7 @@ class ProjectDocumentation:
 
         <h1 id="overview">Smart Home Energy Optimization System</h1>
         <div class="badge-container">
-            {self.badges.generate_badge_html("index", 
+            {self.badges.generate_badge_html("", 
                                         self.badges_config["index"]["color"],
                                         self.badges_config["index"]["title"])}
         </div>
@@ -272,9 +272,9 @@ class ProjectDocumentation:
                 <a href="visuals/pipeline.html" class="view-full-page" target="_blank">View Full Page</a>
             </div>
             <div class="badge-container">
-                {self.badges.generate_badge_html("pipeline",
-                                            self.badges_config["pipeline"]["color"],
-                                            self.badges_config["pipeline"]["title"])}
+                {self.badges.generate_badge_html("visuals/pipeline",
+                                            self.badges_config["visuals/pipeline"]["color"],
+                                            self.badges_config["visuals/pipeline"]["title"])}
             </div>
             <iframe src="visuals/pipeline.html"></iframe>
         </div>
@@ -285,9 +285,9 @@ class ProjectDocumentation:
                 <a href="visuals/timeline.html" class="view-full-page" target="_blank">View Full Page</a>
             </div>
             <div class="badge-container">
-                {self.badges.generate_badge_html("timeline",
-                                            self.badges_config["timeline"]["color"],
-                                            self.badges_config["timeline"]["title"])}
+                {self.badges.generate_badge_html("visuals/timeline",
+                                            self.badges_config["visuals/timeline"]["color"],
+                                            self.badges_config["visuals/timeline"]["title"])}
             </div>
             <iframe src="visuals/timeline.html"></iframe>
         </div>
@@ -298,9 +298,9 @@ class ProjectDocumentation:
                 <a href="visuals/tech_stack.html" class="view-full-page" target="_blank">View Full Page</a>
             </div>
             <div class="badge-container">
-                {self.badges.generate_badge_html("tech_stack",
-                                            self.badges_config["tech_stack"]["color"],
-                                            self.badges_config["tech_stack"]["title"])}
+                {self.badges.generate_badge_html("visuals/tech_stack",
+                                            self.badges_config["visuals/tech_stack"]["color"],
+                                            self.badges_config["visuals/tech_stack"]["title"])}
             </div>
             <iframe src="visuals/tech_stack.html"></iframe>
         </div>
