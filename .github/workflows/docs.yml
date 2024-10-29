@@ -24,11 +24,8 @@ jobs:
           
       - name: Generate Documentation
         run: |
-          # Generate README
-          python src/generate_readme.py
-          
-          # Generate Dashboard
-          python src/generate_dashboard.py
+          # generate readme, diagrams, deliverable dashboards
+          python src/generate_mermaid_diagrams.py
           
           # Create .nojekyll
           touch .nojekyll

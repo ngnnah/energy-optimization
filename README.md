@@ -39,34 +39,39 @@ graph LR
 
 ```mermaid
 graph TD
-    %% Styling
-    classDef phase fill:#3B82F6,stroke:#3B82F6,stroke-width:2px,color:white,font-weight:bold
-    classDef module fill:#10B981,stroke:#10B981,stroke-width:2px,color:white,font-weight:bold
+    classDef phase fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold,font-size:18px
+    classDef module fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold,font-size:16px
 
-    %% Phase 1: Foundation
-    P1[Data Collection & Storage]:::phase --> M1[Weather API Integration]:::module
-    P1 --> M2[Smart Meter Setup]:::module
-    P1 --> M3[Database Design]:::module
+    %% Top Row - Scale nodes with more content
+    F[🚀 Foundation<br/>Module]:::phase --> |Data Flow| A[🧠 Analytics<br/>Module]:::phase
+    
+    %% Bottom Row
+    I[⚡ Integration<br/>Module]:::phase --> |User Flow| U[📊 UI/Dashboard<br/>Module]:::phase
+    
+    %% Vertical Connections with descriptive labels
+    F --> |Processing| I
+    A --> |Results| U
+    
+    %% Components in each module with emojis and detailed text
+    F --> F1[🔄 ETL Pipeline<br/>Data Storage<br/>API Integration]:::module
+    A --> A1[📈 ML Models<br/>Time Series<br/>Predictions]:::module
+    I --> I1[🔌 API Layer<br/>Testing<br/>Deployment]:::module
+    U --> U1[💫 Dashboard<br/>Monitoring<br/>Alerts]:::module
 
-    %% Phase 2: Processing
-    P2[Data Processing]:::phase --> M4[ETL Pipeline]:::module
-    P2 --> M5[Stream Processing]:::module
-    P2 --> M6[Cache System]:::module
+    %% Style overrides for better visibility
+    style F fill:#FF61D2,stroke:#FF61D2,color:#fff
+    style A fill:#4D96FF,stroke:#4D96FF,color:#fff
+    style I fill:#6C4AB6,stroke:#6C4AB6,color:#fff
+    style U fill:#00D7FF,stroke:#00D7FF,color:#fff
+    
+    %% Module styling
+    style F1 fill:#FF92E3,stroke:#FF92E3,color:#fff
+    style A1 fill:#72AAFF,stroke:#72AAFF,color:#fff
+    style I1 fill:#8B6AD6,stroke:#8B6AD6,color:#fff
+    style U1 fill:#45E3FF,stroke:#45E3FF,color:#fff
 
-    %% Phase 3: Analytics
-    P3[Analytics & ML]:::phase --> M7[Pattern Detection]:::module
-    P3 --> M8[Predictive Models]:::module
-    P3 --> M9[Optimization Logic]:::module
-
-    %% Phase 4: Interface
-    P4[API & Dashboard]:::phase --> M10[REST API]:::module
-    P4 --> M11[Visualization]:::module
-    P4 --> M12[Documentation]:::module
-
-    %% Connections
-    M3 --> P2
-    M6 --> P3
-    M9 --> P4
+    %% Link styling
+    linkStyle 0,1,2,3,4,5,6,7 stroke-width:3px,fill:none,stroke:#FFB6C1
 ```
 
 
@@ -108,28 +113,25 @@ graph TB
 ## Technical Stack
 
 ```mermaid
+%%{init: {'theme':'forest'}}%%
 mindmap
-    root((Energy<br/>System))
-        Data Collection
-            Python Scripts
-            REST APIs
-            Smart Meter SDK
-        Processing
-            Apache Airflow
-            Redis Cache
-            Stream Processing
-        Storage
-            Time Series DB
-            SQLite
-            Data Lake
-        Analytics
-            scikit-learn
-            Prophet
-            TensorFlow
-        Interface
-            FastAPI
-            React
-            D3.js
+    root((🔋 Energy<br/>System))
+        [📊 Data Pipeline]
+            (🌤️ Weather API)
+            (📈 Smart Meter)
+            (🔄 ETL Process)
+        [💾 Storage]
+            (📀 SQLite)
+            (📊 Time Series)
+            (⚡ Cache Layer)
+        [🧠 Analytics]
+            (🔍 Pattern Detection)
+            (📉 Forecasting)
+            (⚙️ Optimization)
+        [🎯 Interface]
+            (🔌 REST API)
+            (📱 Dashboard)
+            (🔔 Alerts)
 ```
 
 
@@ -139,6 +141,8 @@ mindmap
 ```
 energy-optimization/
 ├── src/
+│   ├── generate_mermaid_diagrams.py    # Handles both README and diagram integration
+│   ├── generate_dashboard.py           # Handles main dashboard UI docs/index.html
 │   ├── data_collection/
 │   │   ├── weather_api.py
 │   │   └── smart_meter.py
@@ -152,8 +156,8 @@ energy-optimization/
 │       ├── routes.py
 │       └── optimization.py
 ├── docs/
-│   └── index.html      # Project Results Dashboard
-└── README.md          # Project Documentation
+│   └── index.html                      # Project Results Dashboard
+└── README.md                           # Project Documentation
 ```
 
 ## Project Features
@@ -171,9 +175,9 @@ energy-optimization/
 
 ## Local Development
 ```bash
-# Generate root README
-python generate_readme_diagrams.py
-python generate_dashboard.py
+# Generate root README and dashboard
+python generate_docs.py
+python -m http.server --directory docs
 ```
 
 ## Project Results

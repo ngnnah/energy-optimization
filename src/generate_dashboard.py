@@ -255,23 +255,8 @@ def generate_project_dashboard():
         .animate {
             animation: fadeIn 0.6s ease forwards;
         }
+        
     </style>
-    <!-- Add Mermaid.js -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({
-            theme: 'dark',
-            themeVariables: {
-                darkMode: true,
-                background: '#1e293b',
-                primaryColor: '#6366f1',
-                secondaryColor: '#06b6d4',
-                tertiaryColor: '#f43f5e',
-                primaryTextColor: '#f8fafc',
-                fontSize: '16px'
-            }
-        });
-    </script>    
 </head>
 <body>
     <div class="container">
@@ -313,59 +298,10 @@ def generate_project_dashboard():
                 <div class="metric-label">Prediction Accuracy</div>
             </div>
         </div>
-"""
-
-    # Add Implementation Architecture section with Mermaid diagrams
-    dashboard_content += """
-        <!-- System Architecture -->
-        <div class="module">
-            <h2><i class="fas fa-project-diagram"></i> System Architecture</h2>
-            <div class="mermaid">
-            graph LR
-                classDef source fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold
-                classDef process fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold
-                classDef storage fill:#45B7D1,stroke:#45B7D1,stroke-width:4px,color:white,font-weight:bold
-                classDef output fill:#96CEB4,stroke:#96CEB4,stroke-width:4px,color:white,font-weight:bold
-
-                DataSources[Data Sources]:::source --> ETL[ETL Pipeline]:::process
-                ETL --> Storage[Storage Layer]:::storage
-                Storage --> Analysis[Analysis Engine]:::process
-                
-                DataSources --> RealTime[Real-time Stream]:::process
-                RealTime --> Cache[Cache Layer]:::storage
-                Cache --> ML[ML Models]:::process
-                
-                Analysis --> ML
-                ML --> API[API Layer]:::output
-                API --> Dashboard[Dashboard]:::output
-            </div>
-        </div>
-
-        <!-- Implementation Roadmap -->
-        <div class="module">
-            <h2><i class="fas fa-map"></i> Implementation Design</h2>
-            <div class="mermaid">
-            graph TD
-                classDef phase fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold
-                classDef module fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold
-
-                %% Top Row
-                F[Foundation<br/>Module]:::phase --> |Data Flow| A[Analytics<br/>Module]:::phase
-                
-                %% Bottom Row
-                I[Integration<br/>Module]:::phase --> |User Flow| U[UI/Dashboard<br/>Module]:::phase
-                
-                %% Vertical Connections
-                F --> |Processing| I
-                A --> |Results| U
-                
-                %% Components in each module
-                F --> F1[ETL Pipeline<br/>Data Storage]:::module
-                A --> A1[ML Models<br/>Time Series]:::module
-                I --> I1[API Layer<br/>Testing]:::module
-                U --> U1[Dashboard<br/>Deployment]:::module
-            </div>
-        </div>
+        
+        <!-- Mermaid Diagrams -->
+        
+        
 
         <!-- Module Implementations -->
         <div class="module">
@@ -453,19 +389,12 @@ def generate_project_dashboard():
             </div>
         </div>
     </div>
-"""
-
-    # Add footer
-    dashboard_content += """
-        <div class="module" style="text-align: center; margin-top: 40px;">
-            <a href="https://github.com/ngnnah/energy-optimization" class="btn btn-primary" target="_blank">
-                <i class="fab fa-github"></i> View Implementation Details
-            </a>
-        </div>
+    <!-- Footer -->
+    <div class="module" style="text-align: center; margin-top: 40px;">
+        <a href="https://github.com/ngnnah/energy-optimization" class="btn btn-primary" target="_blank">
+            <i class="fab fa-github"></i> View Implementation Details
+        </a>
     </div>
-"""
-    # add animation and closing tags
-    dashboard_content += """
     <script>
         // Add animation to elements when they come into view
         const observerOptions = {
@@ -493,4 +422,5 @@ def generate_project_dashboard():
 
 
 if __name__ == "__main__":
+    # When running directly, generate without diagrams
     generate_project_dashboard()

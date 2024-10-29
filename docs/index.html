@@ -253,28 +253,13 @@
         .animate {
             animation: fadeIn 0.6s ease forwards;
         }
+        
     </style>
-    <!-- Add Mermaid.js -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({
-            theme: 'dark',
-            themeVariables: {
-                darkMode: true,
-                background: '#1e293b',
-                primaryColor: '#6366f1',
-                secondaryColor: '#06b6d4',
-                tertiaryColor: '#f43f5e',
-                primaryTextColor: '#f8fafc',
-                fontSize: '16px'
-            }
-        });
-    </script>    
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 <script>
     mermaid.initialize({
-        theme: 'dark',
+        theme: 'base',
         themeVariables: {
             darkMode: true,
             background: '#1e293b',
@@ -328,56 +313,161 @@
                 <div class="metric-label">Prediction Accuracy</div>
             </div>
         </div>
+        
+        
+<div class="module">
+    <h2><i class="fas fa-project-diagram"></i> System Architecture</h2>
+    <div class="mermaid">
+        
 
-        <!-- System Architecture -->
-        <div class="module">
-            <h2><i class="fas fa-project-diagram"></i> System Architecture</h2>
-            <div class="mermaid">
-            graph LR
-                classDef source fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold
-                classDef process fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold
-                classDef storage fill:#45B7D1,stroke:#45B7D1,stroke-width:4px,color:white,font-weight:bold
-                classDef output fill:#96CEB4,stroke:#96CEB4,stroke-width:4px,color:white,font-weight:bold
+graph LR
+    %% Styling
+    classDef source fill:#FF6B6B,stroke:#FF6B6B,stroke-width:2px,color:white,font-weight:bold
+    classDef process fill:#4ECDC4,stroke:#4ECDC4,stroke-width:2px,color:white,font-weight:bold
+    classDef storage fill:#45B7D1,stroke:#45B7D1,stroke-width:2px,color:white,font-weight:bold
+    classDef ml fill:#A78BFA,stroke:#A78BFA,stroke-width:2px,color:white,font-weight:bold
+    classDef output fill:#10B981,stroke:#10B981,stroke-width:2px,color:white,font-weight:bold
 
-                DataSources[Data Sources]:::source --> ETL[ETL Pipeline]:::process
-                ETL --> Storage[Storage Layer]:::storage
-                Storage --> Analysis[Analysis Engine]:::process
-                
-                DataSources --> RealTime[Real-time Stream]:::process
-                RealTime --> Cache[Cache Layer]:::storage
-                Cache --> ML[ML Models]:::process
-                
-                Analysis --> ML
-                ML --> API[API Layer]:::output
-                API --> Dashboard[Dashboard]:::output
-            </div>
-        </div>
+    %% Data Sources
+    DS[Data Sources]:::source --> ETL[ETL Pipeline]:::process
+    WA[Weather API]:::source --> ETL
+    SM[Smart Meter]:::source --> ETL
 
-        <!-- Implementation Roadmap -->
-        <div class="module">
-            <h2><i class="fas fa-map"></i> Implementation Design</h2>
-            <div class="mermaid">
-            graph TD
-                classDef phase fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold
-                classDef module fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold
+    %% Processing Layer
+    ETL --> TS[Time Series DB]:::storage
+    ETL --> Cache[Cache Layer]:::storage
 
-                %% Top Row
-                F[Foundation<br/>Module]:::phase --> |Data Flow| A[Analytics<br/>Module]:::phase
-                
-                %% Bottom Row
-                I[Integration<br/>Module]:::phase --> |User Flow| U[UI/Dashboard<br/>Module]:::phase
-                
-                %% Vertical Connections
-                F --> |Processing| I
-                A --> |Results| U
-                
-                %% Components in each module
-                F --> F1[ETL Pipeline<br/>Data Storage]:::module
-                A --> A1[ML Models<br/>Time Series]:::module
-                I --> I1[API Layer<br/>Testing]:::module
-                U --> U1[Dashboard<br/>Deployment]:::module
-            </div>
-        </div>
+    %% Analysis Layer
+    TS --> PD[Pattern Detection]:::ml
+    Cache --> RT[Real-time Analysis]:::ml
+    PD --> ML[ML Models]:::ml
+    RT --> ML
+
+    %% Output Layer
+    ML --> API[REST API]:::output
+    API --> DASH[Dashboard]:::output
+    API --> OPT[Optimization Engine]:::output
+
+
+    </div>
+</div>
+
+<div class="module">
+    <h2><i class="fas fa-road"></i> Implementation Roadmap</h2>
+    <div class="mermaid">
+        
+
+graph TD
+    classDef phase fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold,font-size:18px
+    classDef module fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold,font-size:16px
+
+    %% Top Row - Scale nodes with more content
+    F[🚀 Foundation<br/>Module]:::phase --> |Data Flow| A[🧠 Analytics<br/>Module]:::phase
+    
+    %% Bottom Row
+    I[⚡ Integration<br/>Module]:::phase --> |User Flow| U[📊 UI/Dashboard<br/>Module]:::phase
+    
+    %% Vertical Connections with descriptive labels
+    F --> |Processing| I
+    A --> |Results| U
+    
+    %% Components in each module with emojis and detailed text
+    F --> F1[🔄 ETL Pipeline<br/>Data Storage<br/>API Integration]:::module
+    A --> A1[📈 ML Models<br/>Time Series<br/>Predictions]:::module
+    I --> I1[🔌 API Layer<br/>Testing<br/>Deployment]:::module
+    U --> U1[💫 Dashboard<br/>Monitoring<br/>Alerts]:::module
+
+    %% Style overrides for better visibility
+    style F fill:#FF61D2,stroke:#FF61D2,color:#fff
+    style A fill:#4D96FF,stroke:#4D96FF,color:#fff
+    style I fill:#6C4AB6,stroke:#6C4AB6,color:#fff
+    style U fill:#00D7FF,stroke:#00D7FF,color:#fff
+    
+    %% Module styling
+    style F1 fill:#FF92E3,stroke:#FF92E3,color:#fff
+    style A1 fill:#72AAFF,stroke:#72AAFF,color:#fff
+    style I1 fill:#8B6AD6,stroke:#8B6AD6,color:#fff
+    style U1 fill:#45E3FF,stroke:#45E3FF,color:#fff
+
+    %% Link styling
+    linkStyle 0,1,2,3,4,5,6,7 stroke-width:3px,fill:none,stroke:#FFB6C1
+
+
+    </div>
+</div>
+
+<div class="module">
+    <h2><i class="fas fa-tasks"></i> Development Phases</h2>
+    <div class="mermaid">
+        
+
+graph TB
+    %% Styling
+    classDef phase fill:#8B5CF6,stroke:#8B5CF6,stroke-width:2px,color:white,font-weight:bold
+    classDef task fill:#EC4899,stroke:#EC4899,stroke-width:2px,color:white,font-weight:bold
+
+    %% Foundation Phase
+    F[Foundation Phase<br/>Weeks 1-4]:::phase --> F1[Data Source<br/>Integration]:::task
+    F --> F2[Storage Layer<br/>Setup]:::task
+    F --> F3[Basic ETL<br/>Pipeline]:::task
+
+    %% Core Phase
+    C[Core Phase<br/>Weeks 5-8]:::phase --> C1[Stream<br/>Processing]:::task
+    C --> C2[Pattern<br/>Detection]:::task
+    C --> C3[Basic ML<br/>Models]:::task
+
+    %% Advanced Phase
+    A[Advanced Phase<br/>Weeks 9-12]:::phase --> A1[Advanced<br/>Analytics]:::task
+    A --> A2[Optimization<br/>Engine]:::task
+    A --> A3[API<br/>Development]:::task
+
+    %% Final Phase
+    D[Delivery Phase<br/>Weeks 13-16]:::phase --> D1[Dashboard<br/>Development]:::task
+    D --> D2[Testing &<br/>Optimization]:::task
+    D --> D3[Documentation &<br/>Deployment]:::task
+
+    %% Connections
+    F --> C
+    C --> A
+    A --> D
+
+
+    </div>
+</div>
+
+
+<div class="module">
+    <h2><i class="fas fa-tasks"></i> Technical Stack</h2>
+    <div class="mermaid">
+        
+
+%%{init: {'theme':'forest'}}%%
+mindmap
+    root((🔋 Energy<br/>System))
+        [📊 Data Pipeline]
+            (🌤️ Weather API)
+            (📈 Smart Meter)
+            (🔄 ETL Process)
+        [💾 Storage]
+            (📀 SQLite)
+            (📊 Time Series)
+            (⚡ Cache Layer)
+        [🧠 Analytics]
+            (🔍 Pattern Detection)
+            (📉 Forecasting)
+            (⚙️ Optimization)
+        [🎯 Interface]
+            (🔌 REST API)
+            (📱 Dashboard)
+            (🔔 Alerts)
+
+
+    </div>
+</div>
+
+<!-- Mermaid Diagrams -->
+        
+        
 
         <!-- Module Implementations -->
         <div class="module">
@@ -465,14 +555,12 @@
             </div>
         </div>
     </div>
-
-        <div class="module" style="text-align: center; margin-top: 40px;">
-            <a href="https://github.com/ngnnah/energy-optimization" class="btn btn-primary" target="_blank">
-                <i class="fab fa-github"></i> View Implementation Details
-            </a>
-        </div>
+    <!-- Footer -->
+    <div class="module" style="text-align: center; margin-top: 40px;">
+        <a href="https://github.com/ngnnah/energy-optimization" class="btn btn-primary" target="_blank">
+            <i class="fab fa-github"></i> View Implementation Details
+        </a>
     </div>
-
     <script>
         // Add animation to elements when they come into view
         const observerOptions = {
