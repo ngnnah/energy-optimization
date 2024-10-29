@@ -21,131 +21,189 @@ class ProjectDocumentation:
         self.generate_tech_stack_visual()
 
     def generate_pipeline_visual(self):
-        """Generate pipeline architecture visualization"""
-        nodes = [
-            "Data Sources",
-            "ETL Pipeline",
-            "Storage",
-            "Analysis",
-            "ML Models",
-            "API",
-            "Dashboard",
-        ]
-        edges = [(nodes[i], nodes[i + 1]) for i in range(len(nodes) - 1)]
+        """Generate system architecture using Mermaid.js"""
+        mermaid_diagram = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Architecture</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .mermaid { background: white; padding: 20px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="mermaid">
+    graph TD
+        classDef source fill:#FF6B6B,stroke:#333,stroke-width:2px,color:white
+        classDef process fill:#4ECDC4,stroke:#333,stroke-width:2px,color:white
+        classDef storage fill:#45B7D1,stroke:#333,stroke-width:2px,color:white
+        classDef output fill:#96CEB4,stroke:#333,stroke-width:2px,color:white
 
-        G = nx.DiGraph()
-        G.add_edges_from(edges)
-        pos = nx.spring_layout(G)
+        S[Data Sources]:::source --> P[ETL Pipeline]
+        P --> D[Data Storage]:::storage
+        D --> A[Analysis Engine]:::process
+        A --> M[ML Models]:::process
+        M --> O[Optimization Engine]:::process
+        O --> API[API Layer]:::output
+        API --> UI[Dashboard]:::output
 
-        edge_trace = go.Scatter(
-            x=[], y=[], line=dict(width=2, color="#888"), hoverinfo="none", mode="lines"
-        )
+        subgraph Data Collection
+            S
+            P
+        end
 
-        for edge in G.edges():
-            x0, y0 = pos[edge[0]]
-            x1, y1 = pos[edge[1]]
-            edge_trace["x"] += (x0, x1, None)
-            edge_trace["y"] += (y0, y1, None)
+        subgraph Processing
+            D
+            A
+            M
+        end
 
-        node_trace = go.Scatter(
-            x=[pos[node][0] for node in G.nodes()],
-            y=[pos[node][1] for node in G.nodes()],
-            text=list(G.nodes()),
-            mode="markers+text",
-            hoverinfo="text",
-            marker=dict(size=20, color="#0EA5E9"),
-            textposition="bottom center",
-        )
-
-        fig = go.Figure(
-            data=[edge_trace, node_trace],
-            layout=go.Layout(
-                showlegend=False,
-                hovermode="closest",
-                margin=dict(b=20, l=5, r=5, t=40),
-                xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            ),
-        )
-
-        fig.write_html("docs/visuals/pipeline.html")
+        subgraph Output
+            O
+            API
+            UI
+        end
+    </div>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>
+"""
+        with open("docs/visuals/pipeline.html", "w") as f:
+            f.write(mermaid_diagram)
 
     def generate_timeline_visual(self):
-        """Generate project timeline visualization"""
-        df = pd.DataFrame(
-            [
-                dict(
-                    Task="Foundation",
-                    Start="2024-11-04",
-                    End="2024-11-17",
-                    Phase="Phase 1",
-                ),
-                dict(
-                    Task="Data Pipeline",
-                    Start="2024-11-18",
-                    End="2024-12-01",
-                    Phase="Phase 1",
-                ),
-                dict(
-                    Task="Core Analytics",
-                    Start="2024-12-02",
-                    End="2024-12-29",
-                    Phase="Phase 2",
-                ),
-                dict(
-                    Task="ML Integration",
-                    Start="2024-01-13",
-                    End="2024-02-09",
-                    Phase="Phase 3",
-                ),
-                dict(
-                    Task="UI/Dashboard",
-                    Start="2024-02-24",
-                    End="2024-03-16",
-                    Phase="Phase 4",
-                ),
-            ]
-        )
-
-        fig = px.timeline(df, x_start="Start", x_end="End", y="Task", color="Phase")
-        fig.update_layout(
-            title="Project Timeline", xaxis_title="Date", yaxis_title="Task"
-        )
-
-        fig.write_html("docs/visuals/timeline.html")
+        """Generate project timeline using Mermaid.js"""
+        mermaid_diagram = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Development Timeline</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .mermaid { background: white; padding: 20px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="mermaid">
+    gantt
+        title Project Development Timeline
+        dateFormat YYYY-MM-DD
+        axisFormat %b-%Y
+        
+        section Foundation
+        Environment Setup     :a1, 2024-11-04, 7d
+        Data Pipeline        :a2, after a1, 14d
+        Storage Layer        :a3, after a2, 7d
+        
+        section Core Analytics
+        Pattern Detection    :b1, after a3, 14d
+        Time Series Analysis :b2, after b1, 14d
+        Basic ML Models      :b3, after b2, 14d
+        
+        section ML Integration
+        Advanced Pipeline    :c1, after b3, 14d
+        Model Deployment     :c2, after c1, 14d
+        
+        section UI/Dashboard
+        API Development      :d1, after c2, 14d
+        Dashboard           :d2, after d1, 14d
+        Documentation       :d3, after d2, 7d
+    </div>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>
+"""
+        with open("docs/visuals/timeline.html", "w") as f:
+            f.write(mermaid_diagram)
 
     def generate_tech_stack_visual(self):
-        """Generate technical stack visualization"""
-        tech_data = {
-            "Category": [
-                "Data Collection",
-                "Data Collection",
-                "Storage",
-                "Storage",
-                "Analysis",
-                "Analysis",
-                "UI",
-                "UI",
-            ],
-            "Tool": [
-                "Python Requests",
-                "Weather API",
-                "SQLite",
-                "Pandas",
-                "Scikit-learn",
-                "Prophet",
-                "Streamlit",
-                "Plotly",
-            ],
-            "Value": [1, 1, 1, 1, 1, 1, 1, 1],
-        }
-        df = pd.DataFrame(tech_data)
+        """Generate tech stack visualization using Mermaid.js"""
+        mermaid_diagram = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Technical Stack</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .mermaid { background: white; padding: 20px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="mermaid">
+    mindmap
+        root((Energy<br/>System))
+            Data Pipeline
+                Weather API
+                Smart Meter Data
+                ETL Process
+            Storage
+                SQLite
+                Time Series DB
+                Cache Layer
+            Analytics
+                Pattern Detection
+                Forecasting
+                Optimization
+            Interface
+                REST API
+                Dashboard
+                Alerts
+    </div>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>
+"""
+        with open("docs/visuals/tech_stack.html", "w") as f:
+            f.write(mermaid_diagram)
 
-        fig = px.treemap(df, path=["Category", "Tool"], values="Value")
-
-        fig.update_layout(title="Technical Stack Components")
-
-        fig.write_html("docs/visuals/tech_stack.html")
+    def generate_progress_tracker(self):
+        """Generate progress tracking visualization"""
+        mermaid_diagram = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Progress</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .mermaid { background: white; padding: 20px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="mermaid">
+    journey
+        title Project Progress Tracker
+        section Foundation
+          Environment Setup: 5: done
+          Data Pipeline: 3: in-progress
+          Storage Layer: 2: pending
+        section Analytics
+          Pattern Detection: 1: pending
+          Time Series Analysis: 1: pending
+          ML Models: 1: pending
+        section Integration
+          API Development: 1: pending
+          Dashboard: 1: pending
+          Documentation: 1: pending
+    </div>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>
+"""
+        with open("docs/visuals/progress.html", "w") as f:
+            f.write(mermaid_diagram)
 
     def create_html_index(self):
         """Create main index.html with all visualizations and tracking"""
