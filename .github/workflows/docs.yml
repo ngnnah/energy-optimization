@@ -6,7 +6,6 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-# Add these permissions at the top level of your workflow
 permissions:
   contents: write
   pages: write
@@ -16,21 +15,19 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
       
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
           
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          
       - name: Generate documentation
         run: |
           python src/visualization_generator.py
-          cp docs/index.html docs/README.md
+          cp docs/index.html index.html
+          cp docs/.nojekyll .nojekyll
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
