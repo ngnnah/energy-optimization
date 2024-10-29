@@ -7,19 +7,12 @@ class DocumentationBadges:
     def get_badges_config(self):
         """Define badges for different sections with custom colors"""
         return {
-            "index": {"color": "#79C83D", "title": "docs_visits"},  # Green
-            "visuals/pipeline": {  # Updated path
-                "color": "#FF6B6B",  # Red
-                "title": "pipeline_views",
-            },
-            "visuals/timeline": {  # Updated path
-                "color": "#4ECDC4",  # Teal
-                "title": "timeline_views",
-            },
-            "visuals/tech_stack": {  # Updated path
-                "color": "#45B7D1",  # Blue
-                "title": "stack_views",
-            },
+            "index": {"color": "#79C83D", "title": "docs_visits"},
+            "visuals/pipeline": {"color": "#FF6B6B", "title": "pipeline_views"},
+            "visuals/timeline": {"color": "#4ECDC4", "title": "timeline_views"},
+            "visuals/tech_stack": {"color": "#45B7D1", "title": "stack_views"},
+            "visuals/progress": {"color": "#FFA726", "title": "progress_views"},
+            "visuals/milestones": {"color": "#9C27B0", "title": "milestone_views"},
         }
 
     def generate_badge_markdown(self, page_name, color_bg="#79C83D", title="visits"):

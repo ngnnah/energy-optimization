@@ -16,194 +16,354 @@ class ProjectDocumentation:
         """Generate all visualization files"""
         os.makedirs("docs/visuals", exist_ok=True)
 
+        # Generate each visualization
         self.generate_pipeline_visual()
         self.generate_timeline_visual()
         self.generate_tech_stack_visual()
+        self.generate_progress_tracker()
+        self.generate_milestone_tracker()
 
     def generate_pipeline_visual(self):
         """Generate system architecture using Mermaid.js"""
-        mermaid_diagram = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>System Architecture</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .mermaid { background: white; padding: 20px; border-radius: 8px; }
-    </style>
-</head>
-<body>
-    <div class="mermaid">
-    graph TD
-        classDef source fill:#FF6B6B,stroke:#333,stroke-width:2px,color:white
-        classDef process fill:#4ECDC4,stroke:#333,stroke-width:2px,color:white
-        classDef storage fill:#45B7D1,stroke:#333,stroke-width:2px,color:white
-        classDef output fill:#96CEB4,stroke:#333,stroke-width:2px,color:white
-
-        S[Data Sources]:::source --> P[ETL Pipeline]
-        P --> D[Data Storage]:::storage
-        D --> A[Analysis Engine]:::process
-        A --> M[ML Models]:::process
-        M --> O[Optimization Engine]:::process
-        O --> API[API Layer]:::output
-        API --> UI[Dashboard]:::output
-
-        subgraph Data Collection
-            S
-            P
-        end
-
-        subgraph Processing
-            D
-            A
-            M
-        end
-
-        subgraph Output
-            O
-            API
-            UI
-        end
-    </div>
-    <script>
-        mermaid.initialize({ startOnLoad: true });
-    </script>
-</body>
-</html>
-"""
         with open("docs/visuals/pipeline.html", "w") as f:
-            f.write(mermaid_diagram)
+            f.write(
+                """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>System Architecture</title>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px;
+                background: #1a1a1a;
+                color: white;
+            }
+            .mermaid { 
+                background: #1a1a1a; 
+                padding: 20px; 
+                border-radius: 8px;
+            }
+            .title {
+                color: white;
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="title">System Architecture</h1>
+        <div class="mermaid">
+        graph LR
+            classDef source fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold
+            classDef process fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold
+            classDef storage fill:#45B7D1,stroke:#45B7D1,stroke-width:4px,color:white,font-weight:bold
+            classDef output fill:#96CEB4,stroke:#96CEB4,stroke-width:4px,color:white,font-weight:bold
+
+            %% First Line - Data Flow
+            S[Weather API]:::source --> P[ETL Pipeline]:::process
+            P --> D[Time Series DB]:::storage
+            D --> A[Analysis Engine]:::process
+            A --> M[ML Models]:::output
+
+            %% Second Line - User Interface Flow
+            U[Smart Meter]:::source --> E[Event Stream]:::process
+            E --> C[Cache Layer]:::storage
+            C --> O[Optimization]:::process
+            O --> UI[Dashboard]:::output
+
+            %% Vertical Connections
+            S -.-> U
+            P -.-> E
+            D -.-> C
+            A -.-> O
+            M -.-> UI
+        </div>
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'dark',
+                themeVariables: {
+                    fontFamily: 'arial',
+                    fontSize: '16px'
+                }
+            });
+        </script>
+    </body>
+    </html>
+    """
+            )
 
     def generate_timeline_visual(self):
         """Generate project timeline using Mermaid.js"""
-        mermaid_diagram = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Development Timeline</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .mermaid { background: white; padding: 20px; border-radius: 8px; }
-    </style>
-</head>
-<body>
-    <div class="mermaid">
-    gantt
-        title Project Development Timeline
-        dateFormat YYYY-MM-DD
-        axisFormat %b-%Y
-        
-        section Foundation
-        Environment Setup     :a1, 2024-11-04, 7d
-        Data Pipeline        :a2, after a1, 14d
-        Storage Layer        :a3, after a2, 7d
-        
-        section Core Analytics
-        Pattern Detection    :b1, after a3, 14d
-        Time Series Analysis :b2, after b1, 14d
-        Basic ML Models      :b3, after b2, 14d
-        
-        section ML Integration
-        Advanced Pipeline    :c1, after b3, 14d
-        Model Deployment     :c2, after c1, 14d
-        
-        section UI/Dashboard
-        API Development      :d1, after c2, 14d
-        Dashboard           :d2, after d1, 14d
-        Documentation       :d3, after d2, 7d
-    </div>
-    <script>
-        mermaid.initialize({ startOnLoad: true });
-    </script>
-</body>
-</html>
-"""
         with open("docs/visuals/timeline.html", "w") as f:
-            f.write(mermaid_diagram)
+            f.write(
+                """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Development Timeline</title>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px;
+                background: #1a1a1a;
+                color: white;
+            }
+            .mermaid { 
+                background: #1a1a1a; 
+                padding: 20px; 
+                border-radius: 8px;
+            }
+            .title {
+                color: white;
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="title">Development Timeline</h1>
+        <div class="mermaid">
+        gantt
+            title Project Milestones
+            dateFormat YYYY-MM-DD
+            axisFormat %b-%Y
+            
+            section 1️⃣ Foundation
+            Environment Setup     :crit, active, a1, 2024-11-04, 7d
+            Data Pipeline        :crit, a2, after a1, 14d
+            Storage Layer        :a3, after a2, 7d
+            
+            section 2️⃣ Core Analytics
+            Pattern Detection    :crit, b1, after a3, 14d
+            Time Series Analysis :b2, after b1, 14d
+            ML Models Basic      :crit, b3, after b2, 14d
+            
+            section 3️⃣ Integration
+            Advanced Pipeline    :crit, c1, after b3, 14d
+            Model Deployment     :c2, after c1, 14d
+            
+            section 4️⃣ UI/Dashboard
+            API Development      :crit, d1, after c2, 14d
+            Dashboard           :crit, d2, after d1, 14d
+            Documentation       :d3, after d2, 7d
+        </div>
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'dark',
+                gantt: {
+                    titleTopMargin: 25,
+                    barHeight: 40,
+                    barGap: 4,
+                    topPadding: 50,
+                    sidePadding: 50
+                }
+            });
+        </script>
+    </body>
+    </html>
+    """
+            )
 
     def generate_tech_stack_visual(self):
         """Generate tech stack visualization using Mermaid.js"""
-        mermaid_diagram = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Technical Stack</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .mermaid { background: white; padding: 20px; border-radius: 8px; }
-    </style>
-</head>
-<body>
-    <div class="mermaid">
-    mindmap
-        root((Energy<br/>System))
-            Data Pipeline
-                Weather API
-                Smart Meter Data
-                ETL Process
-            Storage
-                SQLite
-                Time Series DB
-                Cache Layer
-            Analytics
-                Pattern Detection
-                Forecasting
-                Optimization
-            Interface
-                REST API
-                Dashboard
-                Alerts
-    </div>
-    <script>
-        mermaid.initialize({ startOnLoad: true });
-    </script>
-</body>
-</html>
-"""
         with open("docs/visuals/tech_stack.html", "w") as f:
-            f.write(mermaid_diagram)
+            f.write(
+                """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Technical Stack</title>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px;
+                background: #1a1a1a;
+                color: white;
+            }
+            .mermaid { 
+                background: #1a1a1a; 
+                padding: 20px; 
+                border-radius: 8px;
+            }
+            .title {
+                color: white;
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="title">Technical Stack</h1>
+        <div class="mermaid">
+        mindmap
+            root((Energy<br/>System))
+                Data Pipeline
+                    Weather API
+                    Smart Meter Data
+                    ETL Process
+                Storage
+                    SQLite
+                    Time Series DB
+                    Cache Layer
+                Analytics
+                    Pattern Detection
+                    Forecasting
+                    Optimization
+                Interface
+                    REST API
+                    Dashboard
+                    Alerts
+        </div>
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'dark'
+            });
+        </script>
+    </body>
+    </html>
+    """
+            )
 
     def generate_progress_tracker(self):
         """Generate progress tracking visualization"""
-        mermaid_diagram = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Project Progress</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .mermaid { background: white; padding: 20px; border-radius: 8px; }
-    </style>
-</head>
-<body>
-    <div class="mermaid">
-    journey
-        title Project Progress Tracker
-        section Foundation
-          Environment Setup: 5: done
-          Data Pipeline: 3: in-progress
-          Storage Layer: 2: pending
-        section Analytics
-          Pattern Detection: 1: pending
-          Time Series Analysis: 1: pending
-          ML Models: 1: pending
-        section Integration
-          API Development: 1: pending
-          Dashboard: 1: pending
-          Documentation: 1: pending
-    </div>
-    <script>
-        mermaid.initialize({ startOnLoad: true });
-    </script>
-</body>
-</html>
-"""
         with open("docs/visuals/progress.html", "w") as f:
-            f.write(mermaid_diagram)
+            f.write(
+                """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Project Progress</title>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px;
+                background: #1a1a1a;
+                color: white;
+            }
+            .mermaid { 
+                background: #1a1a1a; 
+                padding: 20px; 
+                border-radius: 8px;
+            }
+            .title {
+                color: white;
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="title">Project Progress</h1>
+        <div class="mermaid">
+        journey
+            title Development Progress
+            section Foundation
+            Setup Dev Environment: 5: done
+            Weather API Integration: 4: done
+            Data Pipeline: 3: in-progress
+            Storage Implementation: 2: pending
+            section Analytics
+            Pattern Detection: 1: pending
+            Time Series Processing: 1: pending
+            Basic ML Models: 1: pending
+            section Integration
+            Advanced Pipeline: 1: pending
+            Model Deployment: 1: pending
+            section UI
+            API Layer: 1: pending
+            Dashboard: 1: pending
+            Documentation: 1: pending
+        </div>
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'dark'
+            });
+        </script>
+    </body>
+    </html>
+    """
+            )
+
+    def generate_milestone_tracker(self):
+        """Generate milestone tracking visualization"""
+        with open("docs/visuals/milestones.html", "w") as f:
+            f.write(
+                """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Project Milestones</title>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px;
+                background: #1a1a1a;
+                color: white;
+            }
+            .mermaid { 
+                background: #1a1a1a; 
+                padding: 20px; 
+                border-radius: 8px;
+            }
+            .title {
+                color: white;
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="title">Project Milestones</h1>
+        <div class="mermaid">
+        graph TD
+            classDef milestone fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold
+            classDef completed fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold
+            classDef inprogress fill:#45B7D1,stroke:#45B7D1,stroke-width:4px,color:white,font-weight:bold
+            classDef pending fill:#96CEB4,stroke:#96CEB4,stroke-width:4px,color:white,font-weight:bold
+
+            M1[Milestone 1: Foundation]:::milestone --> |Completed| T1[Environment Setup]:::completed
+            M1 --> |In Progress| T2[Data Pipeline]:::inprogress
+            M1 --> |Pending| T3[Storage Layer]:::pending
+
+            M2[Milestone 2: Analytics]:::milestone --> T4[Pattern Detection]:::pending
+            M2 --> T5[Time Series Analysis]:::pending
+            M2 --> T6[ML Models]:::pending
+
+            M3[Milestone 3: Integration]:::milestone --> T7[API Development]:::pending
+            M3 --> T8[Model Deployment]:::pending
+            M3 --> T9[Testing]:::pending
+
+            M4[Milestone 4: UI/Dashboard]:::milestone --> T10[Frontend]:::pending
+            M4 --> T11[Documentation]:::pending
+            M4 --> T12[Deployment]:::pending
+
+            linkStyle default stroke:#666,stroke-width:2px
+        </div>
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'dark'
+            });
+        </script>
+    </body>
+    </html>
+    """
+            )
 
     def create_html_index(self):
         """Create main index.html with all visualizations and tracking"""
@@ -219,39 +379,42 @@ class ProjectDocumentation:
                 max-width: 1200px;
                 margin: 0 auto;
                 padding: 20px;
-                background-color: #f8fafc;
+                background-color: #1a1a1a;
+                color: white;
             }}
             .nav-menu {{
-                background: #1e293b;
+                background: #333;
                 padding: 1rem;
                 border-radius: 8px;
                 margin-bottom: 2rem;
                 position: sticky;
                 top: 0;
                 z-index: 1000;
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
             }}
             .nav-menu a {{
                 color: white;
                 text-decoration: none;
                 padding: 0.5rem 1rem;
-                margin: 0 0.5rem;
                 border-radius: 4px;
                 transition: background 0.3s;
             }}
             .nav-menu a:hover {{
-                background: #334155;
+                background: #45B7D1;
             }}
             .visual-container {{
-                background: white;
+                background: #2d2d2d;
                 border-radius: 8px;
                 padding: 20px;
                 margin: 20px 0;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             }}
             .badge-container {{
                 margin: 10px 0;
                 padding: 5px;
-                background: #f1f5f9;
+                background: #333;
                 border-radius: 4px;
                 display: inline-block;
             }}
@@ -260,9 +423,11 @@ class ProjectDocumentation:
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 1rem;
+                border-bottom: 2px solid #45B7D1;
+                padding-bottom: 0.5rem;
             }}
             .view-full-page {{
-                background: #0ea5e9;
+                background: #45B7D1;
                 color: white;
                 padding: 0.5rem 1rem;
                 border-radius: 4px;
@@ -271,13 +436,14 @@ class ProjectDocumentation:
                 transition: background 0.3s;
             }}
             .view-full-page:hover {{
-                background: #0284c7;
+                background: #FF6B6B;
             }}
             iframe {{
                 border: none;
                 width: 100%;
                 height: 600px;
                 border-radius: 4px;
+                background: #1a1a1a;
             }}
             .metrics {{
                 display: grid;
@@ -286,25 +452,27 @@ class ProjectDocumentation:
                 margin: 1rem 0;
             }}
             .metric-card {{
-                background: white;
+                background: #333;
                 padding: 1rem;
                 border-radius: 4px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                text-align: center;
             }}
         </style>
     </head>
     <body>
         <div class="nav-menu">
             <a href="#overview">Overview</a>
-            <a href="#pipeline">Pipeline</a>
+            <a href="#pipeline">Architecture</a>
             <a href="#timeline">Timeline</a>
             <a href="#tech-stack">Tech Stack</a>
+            <a href="#progress">Progress</a>
+            <a href="#milestones">Milestones</a>
             <a href="https://github.com/ngnnah/energy-optimization" target="_blank">GitHub</a>
         </div>
 
         <h1 id="overview">Smart Home Energy Optimization System</h1>
         <div class="badge-container">
-            {self.badges.generate_badge_html("", 
+            {self.badges.generate_badge_html("index", 
                                         self.badges_config["index"]["color"],
                                         self.badges_config["index"]["title"])}
         </div>
@@ -361,6 +529,32 @@ class ProjectDocumentation:
                                             self.badges_config["visuals/tech_stack"]["title"])}
             </div>
             <iframe src="visuals/tech_stack.html"></iframe>
+        </div>
+
+        <div class="visual-container" id="progress">
+            <div class="section-header">
+                <h2>Project Progress</h2>
+                <a href="visuals/progress.html" class="view-full-page" target="_blank">View Full Page</a>
+            </div>
+            <div class="badge-container">
+                {self.badges.generate_badge_html("visuals/progress",
+                                            self.badges_config["visuals/progress"]["color"],
+                                            self.badges_config["visuals/progress"]["title"])}
+            </div>
+            <iframe src="visuals/progress.html"></iframe>
+        </div>
+
+        <div class="visual-container" id="milestones">
+            <div class="section-header">
+                <h2>Project Milestones</h2>
+                <a href="visuals/milestones.html" class="view-full-page" target="_blank">View Full Page</a>
+            </div>
+            <div class="badge-container">
+                {self.badges.generate_badge_html("visuals/milestones",
+                                            self.badges_config["visuals/milestones"]["color"],
+                                            self.badges_config["visuals/milestones"]["title"])}
+            </div>
+            <iframe src="visuals/milestones.html"></iframe>
         </div>
 
         <script>

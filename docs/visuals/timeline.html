@@ -1,42 +1,69 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Development Timeline</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .mermaid { background: white; padding: 20px; border-radius: 8px; }
-    </style>
-</head>
-<body>
-    <div class="mermaid">
-    gantt
-        title Project Development Timeline
-        dateFormat YYYY-MM-DD
-        axisFormat %b-%Y
-        
-        section Foundation
-        Environment Setup     :a1, 2024-11-04, 7d
-        Data Pipeline        :a2, after a1, 14d
-        Storage Layer        :a3, after a2, 7d
-        
-        section Core Analytics
-        Pattern Detection    :b1, after a3, 14d
-        Time Series Analysis :b2, after b1, 14d
-        Basic ML Models      :b3, after b2, 14d
-        
-        section ML Integration
-        Advanced Pipeline    :c1, after b3, 14d
-        Model Deployment     :c2, after c1, 14d
-        
-        section UI/Dashboard
-        API Development      :d1, after c2, 14d
-        Dashboard           :d2, after d1, 14d
-        Documentation       :d3, after d2, 7d
-    </div>
-    <script>
-        mermaid.initialize({ startOnLoad: true });
-    </script>
-</body>
-</html>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Development Timeline</title>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px;
+                background: #1a1a1a;
+                color: white;
+            }
+            .mermaid { 
+                background: #1a1a1a; 
+                padding: 20px; 
+                border-radius: 8px;
+            }
+            .title {
+                color: white;
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="title">Development Timeline</h1>
+        <div class="mermaid">
+        gantt
+            title Project Milestones
+            dateFormat YYYY-MM-DD
+            axisFormat %b-%Y
+            
+            section 1️⃣ Foundation
+            Environment Setup     :crit, active, a1, 2024-11-04, 7d
+            Data Pipeline        :crit, a2, after a1, 14d
+            Storage Layer        :a3, after a2, 7d
+            
+            section 2️⃣ Core Analytics
+            Pattern Detection    :crit, b1, after a3, 14d
+            Time Series Analysis :b2, after b1, 14d
+            ML Models Basic      :crit, b3, after b2, 14d
+            
+            section 3️⃣ Integration
+            Advanced Pipeline    :crit, c1, after b3, 14d
+            Model Deployment     :c2, after c1, 14d
+            
+            section 4️⃣ UI/Dashboard
+            API Development      :crit, d1, after c2, 14d
+            Dashboard           :crit, d2, after d1, 14d
+            Documentation       :d3, after d2, 7d
+        </div>
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'dark',
+                gantt: {
+                    titleTopMargin: 25,
+                    barHeight: 40,
+                    barGap: 4,
+                    topPadding: 50,
+                    sidePadding: 50
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

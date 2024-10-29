@@ -1,49 +1,67 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>System Architecture</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .mermaid { background: white; padding: 20px; border-radius: 8px; }
-    </style>
-</head>
-<body>
-    <div class="mermaid">
-    graph TD
-        classDef source fill:#FF6B6B,stroke:#333,stroke-width:2px,color:white
-        classDef process fill:#4ECDC4,stroke:#333,stroke-width:2px,color:white
-        classDef storage fill:#45B7D1,stroke:#333,stroke-width:2px,color:white
-        classDef output fill:#96CEB4,stroke:#333,stroke-width:2px,color:white
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>System Architecture</title>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px;
+                background: #1a1a1a;
+                color: white;
+            }
+            .mermaid { 
+                background: #1a1a1a; 
+                padding: 20px; 
+                border-radius: 8px;
+            }
+            .title {
+                color: white;
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="title">System Architecture</h1>
+        <div class="mermaid">
+        graph LR
+            classDef source fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold
+            classDef process fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold
+            classDef storage fill:#45B7D1,stroke:#45B7D1,stroke-width:4px,color:white,font-weight:bold
+            classDef output fill:#96CEB4,stroke:#96CEB4,stroke-width:4px,color:white,font-weight:bold
 
-        S[Data Sources]:::source --> P[ETL Pipeline]
-        P --> D[Data Storage]:::storage
-        D --> A[Analysis Engine]:::process
-        A --> M[ML Models]:::process
-        M --> O[Optimization Engine]:::process
-        O --> API[API Layer]:::output
-        API --> UI[Dashboard]:::output
+            %% First Line - Data Flow
+            S[Weather API]:::source --> P[ETL Pipeline]:::process
+            P --> D[Time Series DB]:::storage
+            D --> A[Analysis Engine]:::process
+            A --> M[ML Models]:::output
 
-        subgraph Data Collection
-            S
-            P
-        end
+            %% Second Line - User Interface Flow
+            U[Smart Meter]:::source --> E[Event Stream]:::process
+            E --> C[Cache Layer]:::storage
+            C --> O[Optimization]:::process
+            O --> UI[Dashboard]:::output
 
-        subgraph Processing
-            D
-            A
-            M
-        end
-
-        subgraph Output
-            O
-            API
-            UI
-        end
-    </div>
-    <script>
-        mermaid.initialize({ startOnLoad: true });
-    </script>
-</body>
-</html>
+            %% Vertical Connections
+            S -.-> U
+            P -.-> E
+            D -.-> C
+            A -.-> O
+            M -.-> UI
+        </div>
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'dark',
+                themeVariables: {
+                    fontFamily: 'arial',
+                    fontSize: '16px'
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

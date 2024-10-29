@@ -1,0 +1,62 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Project Milestones</title>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px;
+                background: #1a1a1a;
+                color: white;
+            }
+            .mermaid { 
+                background: #1a1a1a; 
+                padding: 20px; 
+                border-radius: 8px;
+            }
+            .title {
+                color: white;
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="title">Project Milestones</h1>
+        <div class="mermaid">
+        graph TD
+            classDef milestone fill:#FF6B6B,stroke:#FF6B6B,stroke-width:4px,color:white,font-weight:bold
+            classDef completed fill:#4ECDC4,stroke:#4ECDC4,stroke-width:4px,color:white,font-weight:bold
+            classDef inprogress fill:#45B7D1,stroke:#45B7D1,stroke-width:4px,color:white,font-weight:bold
+            classDef pending fill:#96CEB4,stroke:#96CEB4,stroke-width:4px,color:white,font-weight:bold
+
+            M1[Milestone 1: Foundation]:::milestone --> |Completed| T1[Environment Setup]:::completed
+            M1 --> |In Progress| T2[Data Pipeline]:::inprogress
+            M1 --> |Pending| T3[Storage Layer]:::pending
+
+            M2[Milestone 2: Analytics]:::milestone --> T4[Pattern Detection]:::pending
+            M2 --> T5[Time Series Analysis]:::pending
+            M2 --> T6[ML Models]:::pending
+
+            M3[Milestone 3: Integration]:::milestone --> T7[API Development]:::pending
+            M3 --> T8[Model Deployment]:::pending
+            M3 --> T9[Testing]:::pending
+
+            M4[Milestone 4: UI/Dashboard]:::milestone --> T10[Frontend]:::pending
+            M4 --> T11[Documentation]:::pending
+            M4 --> T12[Deployment]:::pending
+
+            linkStyle default stroke:#666,stroke-width:2px
+        </div>
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'dark'
+            });
+        </script>
+    </body>
+    </html>
+    
