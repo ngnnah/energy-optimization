@@ -607,45 +607,116 @@ class ProjectDocumentation:
             self.badges_config["visuals/tech_stack"]["title"],
         )
 
-        # Create documentation content
+    def create_root_readme(self):
+        """Create root README.md with emojis and proper markdown formatting"""
         readme_content = f"""
-    # Smart Home Energy Optimization System
+    # ⚡ Smart Home Energy Optimization System
 
-    {index_badge}
+    {self.badges.generate_badge_markdown("index", 
+                                    self.badges_config["index"]["color"],
+                                    self.badges_config["index"]["title"])}
 
-    ## Project Overview
-    An end-to-end data engineering pipeline for optimizing home energy consumption.
+    ## 🎯 Project Overview
+    An end-to-end data engineering pipeline for optimizing home energy consumption through real-time monitoring, analysis, and ML-powered recommendations.
 
-    ## System Architecture
-    {pipeline_badge}
-    <details>
-    <summary>View Pipeline Diagram</summary>
-    <iframe src="visuals/pipeline.html" width="100%" height="600px" frameborder="0"></iframe>
-    </details>
+    ## 🏗️ System Architecture
+    {self.badges.generate_badge_markdown("visuals/pipeline",
+                                    self.badges_config["visuals/pipeline"]["color"],
+                                    self.badges_config["visuals/pipeline"]["title"])}
 
-    ## Development Timeline
-    {timeline_badge}
-    <details>
-    <summary>View Project Timeline</summary>
-    <iframe src="visuals/timeline.html" width="100%" height="400px" frameborder="0"></iframe>
-    </details>
+    [![Architecture](visuals/pipeline.html)](visuals/pipeline.html)
 
-    ## Technical Stack
-    {tech_stack_badge}
-    <details>
-    <summary>View Tech Stack</summary>
-    <iframe src="visuals/tech_stack.html" width="100%" height="500px" frameborder="0"></iframe>
-    </details>
+    ## ⏱️ Development Timeline
+    {self.badges.generate_badge_markdown("visuals/timeline",
+                                    self.badges_config["visuals/timeline"]["color"],
+                                    self.badges_config["visuals/timeline"]["title"])}
+
+    [![Timeline](visuals/timeline.html)](visuals/timeline.html)
+
+    ## 🔧 Technical Stack
+    {self.badges.generate_badge_markdown("visuals/tech_stack",
+                                    self.badges_config["visuals/tech_stack"]["color"],
+                                    self.badges_config["visuals/tech_stack"]["title"])}
+
+    [![Tech Stack](visuals/tech_stack.html)](visuals/tech_stack.html)
+
+    ## 📊 Project Progress
+    {self.badges.generate_badge_markdown("visuals/progress",
+                                    self.badges_config["visuals/progress"]["color"],
+                                    self.badges_config["visuals/progress"]["title"])}
+
+    [![Progress](visuals/progress.html)](visuals/progress.html)
+
+    ## 🎯 Milestones
+    {self.badges.generate_badge_markdown("visuals/milestones",
+                                    self.badges_config["visuals/milestones"]["color"],
+                                    self.badges_config["visuals/milestones"]["title"])}
+
+    [![Milestones](visuals/milestones.html)](visuals/milestones.html)
+
+    ## 🚀 Quick Links
+    - [Interactive Documentation](https://ngnnah.github.io/energy-optimization/)
+    - [System Architecture](https://ngnnah.github.io/energy-optimization/visuals/pipeline.html)
+    - [Development Timeline](https://ngnnah.github.io/energy-optimization/visuals/timeline.html)
+    - [Technical Stack](https://ngnnah.github.io/energy-optimization/visuals/tech_stack.html)
+    - [Progress Tracker](https://ngnnah.github.io/energy-optimization/visuals/progress.html)
+    - [Milestone Tracker](https://ngnnah.github.io/energy-optimization/visuals/milestones.html)
+
+    ## 📈 Project Metrics
+    - 🕒 Development Time: 16 weeks
+    - 🔨 Core Components: 4 modules
+    - 📊 Data Sources: 3 integrations
+    - 🎯 Key Features: 12 milestones
+
+    ## 🛠️ Local Development
+    ```bash
+    # Install dependencies
+    pip install plotly pandas networkx
+
+    # Generate documentation
+    python src/visualization_generator.py
+    ```
+
+    ## 📝 Documentation
+    Visit our [Interactive Documentation](https://ngnnah.github.io/energy-optimization/) for:
+    - Detailed system architecture
+    - Development timeline
+    - Technical stack overview
+    - Progress tracking
+    - Milestone updates
+
+    ## 🔄 Current Status
+    - ✅ Environment Setup
+    - 🟡 Data Pipeline Implementation
+    - ⏳ Storage Layer Design
+    - 📅 Analytics Module (Upcoming)
+
+    ## 📊 Progress Overview
+    | Module | Status | Completion |
+    |--------|---------|------------|
+    | Foundation | In Progress | 60% |
+    | Analytics | Planned | 0% |
+    | Integration | Planned | 0% |
+    | UI/Dashboard | Planned | 0% |
+
+    ## 🤝 Contributing
+    Interested in contributing? Check our [issues page](https://github.com/ngnnah/energy-optimization/issues) for current tasks and improvements.
+
+    ## 📫 Contact
+    For questions or suggestions, please [open an issue](https://github.com/ngnnah/energy-optimization/issues/new).
     """
         with open("docs/README.md", "w") as f:
             f.write(readme_content)
 
     def generate_documentation(self):
         """Generate all documentation files"""
+        # Generate visualizations first
         self.generate_visuals()
+
+        # Create documentation files
         self.create_html_index()
         self.create_markdown_docs()
-
+        self.create_root_readme()
         # Create .nojekyll file for GitHub Pages
         with open("docs/.nojekyll", "w") as f:
             pass
