@@ -334,43 +334,61 @@ class ProjectDocumentation:
 
     def create_markdown_docs(self):
         """Create markdown documentation with tracking badges"""
+        # Get badge configurations
+        index_badge = self.badges.generate_badge_markdown(
+            "index",
+            self.badges_config["index"]["color"],
+            self.badges_config["index"]["title"],
+        )
+
+        pipeline_badge = self.badges.generate_badge_markdown(
+            "visuals/pipeline",
+            self.badges_config["visuals/pipeline"]["color"],
+            self.badges_config["visuals/pipeline"]["title"],
+        )
+
+        timeline_badge = self.badges.generate_badge_markdown(
+            "visuals/timeline",
+            self.badges_config["visuals/timeline"]["color"],
+            self.badges_config["visuals/timeline"]["title"],
+        )
+
+        tech_stack_badge = self.badges.generate_badge_markdown(
+            "visuals/tech_stack",
+            self.badges_config["visuals/tech_stack"]["color"],
+            self.badges_config["visuals/tech_stack"]["title"],
+        )
+
+        # Create documentation content
         readme_content = f"""
-# Smart Home Energy Optimization System
+    # Smart Home Energy Optimization System
 
-{self.badges.generate_badge_markdown("index", 
-                                   self.badges_config["index"]["color"],
-                                   self.badges_config["index"]["title"])}
+    {index_badge}
 
-## Project Overview
-An end-to-end data engineering pipeline for optimizing home energy consumption.
+    ## Project Overview
+    An end-to-end data engineering pipeline for optimizing home energy consumption.
 
-## System Architecture
-{self.badges.generate_badge_markdown("pipeline",
-                                   self.badges_config["pipeline"]["color"],
-                                   self.badges_config["pipeline"]["title"])}
-<details>
-<summary>View Pipeline Diagram</summary>
-<iframe src="visuals/pipeline.html" width="100%" height="600px" frameborder="0"></iframe>
-</details>
+    ## System Architecture
+    {pipeline_badge}
+    <details>
+    <summary>View Pipeline Diagram</summary>
+    <iframe src="visuals/pipeline.html" width="100%" height="600px" frameborder="0"></iframe>
+    </details>
 
-## Development Timeline
-{self.badges.generate_badge_markdown("timeline",
-                                   self.badges_config["timeline"]["color"],
-                                   self.badges_config["timeline"]["title"])}
-<details>
-<summary>View Project Timeline</summary>
-<iframe src="visuals/timeline.html" width="100%" height="400px" frameborder="0"></iframe>
-</details>
+    ## Development Timeline
+    {timeline_badge}
+    <details>
+    <summary>View Project Timeline</summary>
+    <iframe src="visuals/timeline.html" width="100%" height="400px" frameborder="0"></iframe>
+    </details>
 
-## Technical Stack
-{self.badges.generate_badge_markdown("tech_stack",
-                                   self.badges_config["tech_stack"]["color"],
-                                   self.badges_config["tech_stack"]["title"])}
-<details>
-<summary>View Tech Stack</summary>
-<iframe src="visuals/tech_stack.html" width="100%" height="500px" frameborder="0"></iframe>
-</details>
-"""
+    ## Technical Stack
+    {tech_stack_badge}
+    <details>
+    <summary>View Tech Stack</summary>
+    <iframe src="visuals/tech_stack.html" width="100%" height="500px" frameborder="0"></iframe>
+    </details>
+    """
         with open("docs/README.md", "w") as f:
             f.write(readme_content)
 
