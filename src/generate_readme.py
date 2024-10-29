@@ -135,11 +135,8 @@ energy-optimization/
 
 ## Local Development
 ```bash
-# Install dependencies
-pip install plotly pandas networkx
-
-# Generate documentation
-python src/visualization_generator.py
+# Generate root README
+python src/generate_readme.py
 ```
 
 ## Project Results

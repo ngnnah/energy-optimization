@@ -1,4 +1,6 @@
-
+# src/generate_dashboard.py
+def generate_project_dashboard():
+    dashboard_content = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -270,23 +272,6 @@
             }
         });
     </script>    
-
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-<script>
-    mermaid.initialize({
-        theme: 'dark',
-        themeVariables: {
-            darkMode: true,
-            background: '#1e293b',
-            primaryColor: '#3B82F6',
-            secondaryColor: '#10B981',
-            tertiaryColor: '#8B5CF6',
-            primaryTextColor: '#fff',
-            fontSize: '16px'
-        }
-    });
-</script>
-
 </head>
 <body>
     <div class="container">
@@ -328,7 +313,10 @@
                 <div class="metric-label">Prediction Accuracy</div>
             </div>
         </div>
+"""
 
+    # Add Implementation Architecture section with Mermaid diagrams
+    dashboard_content += """
         <!-- System Architecture -->
         <div class="module">
             <h2><i class="fas fa-project-diagram"></i> System Architecture</h2>
@@ -465,14 +453,19 @@
             </div>
         </div>
     </div>
+"""
 
+    # Add footer
+    dashboard_content += """
         <div class="module" style="text-align: center; margin-top: 40px;">
             <a href="https://github.com/ngnnah/energy-optimization" class="btn btn-primary" target="_blank">
                 <i class="fab fa-github"></i> View Implementation Details
             </a>
         </div>
     </div>
-
+"""
+    # add animation and closing tags
+    dashboard_content += """
     <script>
         // Add animation to elements when they come into view
         const observerOptions = {
@@ -494,3 +487,10 @@
     </script>
 </body>
 </html>
+"""
+    with open("docs/index.html", "w") as f:
+        f.write(dashboard_content)
+
+
+if __name__ == "__main__":
+    generate_project_dashboard()

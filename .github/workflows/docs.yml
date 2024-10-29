@@ -27,6 +27,9 @@ jobs:
           # Generate README
           python src/generate_readme.py
           
+          # Generate Dashboard
+          python src/generate_dashboard.py
+          
           # Create .nojekyll
           touch .nojekyll
           touch docs/.nojekyll

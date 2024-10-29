@@ -1,9 +1,17 @@
-# Smart Home Energy Optimization System
+# src/generate_mermaid_diagrams.py
+class MermaidDiagrams:
+    def __init__(self):
+        self.diagrams = {}
+        self.generate_all_diagrams()
 
-An end-to-end data engineering pipeline for optimizing home energy consumption through real-time monitoring, analysis, and ML-powered recommendations.
+    def generate_all_diagrams(self):
+        self.diagrams["system_architecture"] = self.generate_system_architecture()
+        self.diagrams["implementation_roadmap"] = self.generate_implementation_roadmap()
+        self.diagrams["development_phases"] = self.generate_development_phases()
+        self.diagrams["tech_stack"] = self.generate_tech_stack()
 
-## System Architecture
-
+    def generate_system_architecture(self):
+        return """
 ```mermaid
 graph LR
     %% Styling
@@ -33,10 +41,10 @@ graph LR
     API --> DASH[Dashboard]:::output
     API --> OPT[Optimization Engine]:::output
 ```
+"""
 
-
-## Implementation Roadmap
-
+    def generate_implementation_roadmap(self):
+        return """
 ```mermaid
 graph TD
     %% Styling
@@ -68,10 +76,10 @@ graph TD
     M6 --> P3
     M9 --> P4
 ```
+"""
 
-
-## Development Phases
-
+    def generate_development_phases(self):
+        return """
 ```mermaid
 graph TB
     %% Styling
@@ -103,10 +111,10 @@ graph TB
     C --> A
     A --> D
 ```
+"""
 
-
-## Technical Stack
-
+    def generate_tech_stack(self):
+        return """
 ```mermaid
 mindmap
     root((Energy<br/>System))
@@ -131,7 +139,24 @@ mindmap
             React
             D3.js
 ```
+"""
 
+    def update_readme(self):
+        readme_template = f"""# Smart Home Energy Optimization System
+
+An end-to-end data engineering pipeline for optimizing home energy consumption through real-time monitoring, analysis, and ML-powered recommendations.
+
+## System Architecture
+{self.diagrams['system_architecture']}
+
+## Implementation Roadmap
+{self.diagrams['implementation_roadmap']}
+
+## Development Phases
+{self.diagrams['development_phases']}
+
+## Technical Stack
+{self.diagrams['tech_stack']}
 
 
 
@@ -178,3 +203,73 @@ python generate_dashboard.py
 
 ## Project Results
 View the working project and results at: [Project Dashboard](https://ngnnah.github.io/energy-optimization/)
+"""
+        with open("README.md", "w") as f:
+            f.write(readme_template)
+
+    def update_index_html(self):
+        # Create HTML version of diagrams for the dashboard
+        diagrams_html = f"""
+<div class="module">
+    <h2><i class="fas fa-project-diagram"></i> System Architecture</h2>
+    <div class="mermaid">
+        {self.diagrams['system_architecture'].replace('```mermaid', '').replace('```', '')}
+    </div>
+</div>
+
+<div class="module">
+    <h2><i class="fas fa-road"></i> Implementation Roadmap</h2>
+    <div class="mermaid">
+        {self.diagrams['implementation_roadmap'].replace('```mermaid', '').replace('```', '')}
+    </div>
+</div>
+
+<div class="module">
+    <h2><i class="fas fa-tasks"></i> Development Phases</h2>
+    <div class="mermaid">
+        {self.diagrams['development_phases'].replace('```mermaid', '').replace('```', '')}
+    </div>
+</div>
+"""
+        # Read existing index.html
+        with open("docs/index.html", "r") as f:
+            content = f.read()
+
+        # Insert diagrams after the metrics section
+        content = content.replace(
+            "<!-- Modules Section -->", f"{diagrams_html}\n<!-- Modules Section -->"
+        )
+
+        # Add Mermaid.js script
+        mermaid_script = """
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+    mermaid.initialize({
+        theme: 'dark',
+        themeVariables: {
+            darkMode: true,
+            background: '#1e293b',
+            primaryColor: '#3B82F6',
+            secondaryColor: '#10B981',
+            tertiaryColor: '#8B5CF6',
+            primaryTextColor: '#fff',
+            fontSize: '16px'
+        }
+    });
+</script>
+"""
+        content = content.replace("</head>", f"{mermaid_script}\n</head>")
+
+        # Write updated content
+        with open("docs/index.html", "w") as f:
+            f.write(content)
+
+
+def main():
+    diagrams = MermaidDiagrams()
+    diagrams.update_readme()
+    diagrams.update_index_html()
+
+
+if __name__ == "__main__":
+    main()
