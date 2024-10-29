@@ -3,32 +3,36 @@ name: Deploy Documentation
 
 on:
   push:
-    branches: [ main ]  # or 'master' depending on your default branch
-  workflow_dispatch:    # Allows manual trigger from GitHub UI
+    branches: [ main ]
+  workflow_dispatch:
+
+# Add these permissions at the top level of your workflow
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v3
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install plotly pandas networkx
-
+          
       - name: Generate documentation
         run: |
           python src/visualization_generator.py
-          # Ensure GitHub Pages can find the index
           cp docs/index.html docs/README.md
-
+          
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
