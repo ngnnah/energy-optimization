@@ -1,198 +1,295 @@
-# visualization_generator.py
+# src/visualization_generator.py
+import plotly.graph_objects as go
+import plotly.express as px
+import networkx as nx
+import pandas as pd
+import os
+from badge_generator import DocumentationBadges
+
+
 class ProjectDocumentation:
     def __init__(self):
-        self.TEMPLATE_PATH = "templates"
-        self.OUTPUT_PATH = "docs"
-        self.VISUALS_PATH = "visuals"
-
-    def generate_documentation(self):
-        # Generate visualizations
-        self.generate_visuals()
-        # Generate documentation
-        self.create_markdown_docs()
-        # Generate index.html
-        self.create_html_index()
+        self.badges = DocumentationBadges()
+        self.badges_config = self.badges.get_badges_config()
 
     def generate_visuals(self):
-        """Generate all interactive plotly visualizations as static HTML"""
-        visuals = {
-            "pipeline": self.create_pipeline_visual(),
-            "timeline": self.create_timeline_visual(),
-            "tech_stack": self.create_tech_stack_visual(),
+        """Generate all visualization files"""
+        os.makedirs("docs/visuals", exist_ok=True)
+
+        self.generate_pipeline_visual()
+        self.generate_timeline_visual()
+        self.generate_tech_stack_visual()
+
+    def generate_pipeline_visual(self):
+        """Generate pipeline architecture visualization"""
+        nodes = [
+            "Data Sources",
+            "ETL Pipeline",
+            "Storage",
+            "Analysis",
+            "ML Models",
+            "API",
+            "Dashboard",
+        ]
+        edges = [(nodes[i], nodes[i + 1]) for i in range(len(nodes) - 1)]
+
+        G = nx.DiGraph()
+        G.add_edges_from(edges)
+        pos = nx.spring_layout(G)
+
+        edge_trace = go.Scatter(
+            x=[], y=[], line=dict(width=2, color="#888"), hoverinfo="none", mode="lines"
+        )
+
+        for edge in G.edges():
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            edge_trace["x"] += (x0, x1, None)
+            edge_trace["y"] += (y0, y1, None)
+
+        node_trace = go.Scatter(
+            x=[pos[node][0] for node in G.nodes()],
+            y=[pos[node][1] for node in G.nodes()],
+            text=list(G.nodes()),
+            mode="markers+text",
+            hoverinfo="text",
+            marker=dict(size=20, color="#0EA5E9"),
+            textposition="bottom center",
+        )
+
+        fig = go.Figure(
+            data=[edge_trace, node_trace],
+            layout=go.Layout(
+                showlegend=False,
+                hovermode="closest",
+                margin=dict(b=20, l=5, r=5, t=40),
+                xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+            ),
+        )
+
+        fig.write_html("docs/visuals/pipeline.html")
+
+    def generate_timeline_visual(self):
+        """Generate project timeline visualization"""
+        df = pd.DataFrame(
+            [
+                dict(
+                    Task="Foundation",
+                    Start="2024-11-04",
+                    End="2024-11-17",
+                    Phase="Phase 1",
+                ),
+                dict(
+                    Task="Data Pipeline",
+                    Start="2024-11-18",
+                    End="2024-12-01",
+                    Phase="Phase 1",
+                ),
+                dict(
+                    Task="Core Analytics",
+                    Start="2024-12-02",
+                    End="2024-12-29",
+                    Phase="Phase 2",
+                ),
+                dict(
+                    Task="ML Integration",
+                    Start="2024-01-13",
+                    End="2024-02-09",
+                    Phase="Phase 3",
+                ),
+                dict(
+                    Task="UI/Dashboard",
+                    Start="2024-02-24",
+                    End="2024-03-16",
+                    Phase="Phase 4",
+                ),
+            ]
+        )
+
+        fig = px.timeline(df, x_start="Start", x_end="End", y="Task", color="Phase")
+        fig.update_layout(
+            title="Project Timeline", xaxis_title="Date", yaxis_title="Task"
+        )
+
+        fig.write_html("docs/visuals/timeline.html")
+
+    def generate_tech_stack_visual(self):
+        """Generate technical stack visualization"""
+        tech_data = {
+            "Category": [
+                "Data Collection",
+                "Data Collection",
+                "Storage",
+                "Storage",
+                "Analysis",
+                "Analysis",
+                "UI",
+                "UI",
+            ],
+            "Tool": [
+                "Python Requests",
+                "Weather API",
+                "SQLite",
+                "Pandas",
+                "Scikit-learn",
+                "Prophet",
+                "Streamlit",
+                "Plotly",
+            ],
+            "Value": [1, 1, 1, 1, 1, 1, 1, 1],
         }
+        df = pd.DataFrame(tech_data)
 
-        for name, fig in visuals.items():
-            fig.write_html(
-                f"{self.VISUALS_PATH}/{name}.html",
-                include_plotlyjs="cdn",
-                full_html=False,
-            )
+        fig = px.treemap(df, path=["Category", "Tool"], values="Value")
 
-    def create_markdown_docs(self):
-        """Create markdown documentation with embedded visuals"""
-        readme_content = """
-# Smart Home Energy Optimization System
+        fig.update_layout(title="Technical Stack Components")
 
-## Project Overview
-An end-to-end data engineering pipeline for optimizing home energy consumption through real-time monitoring, analysis, and ML-powered recommendations.
-
-## System Architecture
-<details>
-<summary>View Pipeline Diagram</summary>
-<iframe src="visuals/pipeline.html" width="100%" height="600px" frameborder="0"></iframe>
-</details>
-
-## Development Timeline
-<details>
-<summary>View Project Timeline</summary>
-<iframe src="visuals/timeline.html" width="100%" height="400px" frameborder="0"></iframe>
-</details>
-
-## Technical Stack
-<details>
-<summary>View Tech Stack</summary>
-<iframe src="visuals/tech_stack.html" width="100%" height="500px" frameborder="0"></iframe>
-</details>
-
-## Implementation Guide
-
-### Weekly Development Process
-1. **Hour 1: Development**
-   - Code implementation
-   - Testing
-   - Integration
-
-2. **Hour 2: Review & Planning**
-   - Documentation
-   - Code review
-   - Next steps planning
-
-### Project Phases
-1. **Foundation** (Weeks 1-4)
-   - Environment setup
-   - Data pipeline creation
-   - Storage layer implementation
-
-2. **Core Analytics** (Weeks 5-8)
-   - Pattern detection
-   - Time series processing
-   - Basic ML models
-
-3. **ML Integration** (Weeks 9-12)
-   - Advanced ML pipeline
-   - Optimization rules
-   - Model deployment
-
-4. **UI/Dashboard** (Weeks 13-16)
-   - Dashboard development
-   - Interactive features
-   - Documentation & launch
-"""
-        with open(f"{self.OUTPUT_PATH}/README.md", "w") as f:
-            f.write(readme_content)
+        fig.write_html("docs/visuals/tech_stack.html")
 
     def create_html_index(self):
-        """Create an HTML index page with embedded visualizations"""
-        html_content = """
+        """Create main index.html with all visualizations and tracking"""
+        html_content = f"""
 <!DOCTYPE html>
 <html>
 <head>
     <title>Smart Home Energy Optimization System</title>
     <style>
-        body {
+        body {{
             font-family: Arial, sans-serif;
             line-height: 1.6;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f8fafc;
-        }
-        .visual-container {
+        }}
+        .visual-container {{
             background: white;
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .tab {
-            padding: 10px 20px;
-            background: #e2e8f0;
+        }}
+        .badge-container {{
+            margin: 10px 0;
+            padding: 5px;
+            background: #f1f5f9;
             border-radius: 4px;
-            cursor: pointer;
-        }
-        .tab.active {
-            background: #0ea5e9;
-            color: white;
-        }
-        iframe {
+            display: inline-block;
+        }}
+        iframe {{
             border: none;
             width: 100%;
             height: 600px;
-        }
+        }}
     </style>
 </head>
 <body>
     <h1>Smart Home Energy Optimization System</h1>
+    <div class="badge-container">
+        {self.badges.generate_badge_html("index", 
+                                       self.badges_config["index"]["color"],
+                                       self.badges_config["index"]["title"])}
+    </div>
     
     <div class="visual-container">
         <h2>System Architecture</h2>
+        <div class="badge-container">
+            {self.badges.generate_badge_html("pipeline",
+                                           self.badges_config["pipeline"]["color"],
+                                           self.badges_config["pipeline"]["title"])}
+        </div>
         <iframe src="visuals/pipeline.html"></iframe>
     </div>
 
     <div class="visual-container">
         <h2>Development Timeline</h2>
+        <div class="badge-container">
+            {self.badges.generate_badge_html("timeline",
+                                           self.badges_config["timeline"]["color"],
+                                           self.badges_config["timeline"]["title"])}
+        </div>
         <iframe src="visuals/timeline.html"></iframe>
     </div>
 
     <div class="visual-container">
         <h2>Technical Stack</h2>
+        <div class="badge-container">
+            {self.badges.generate_badge_html("tech_stack",
+                                           self.badges_config["tech_stack"]["color"],
+                                           self.badges_config["tech_stack"]["title"])}
+        </div>
         <iframe src="visuals/tech_stack.html"></iframe>
     </div>
 
     <script>
-        // Add any interactive features
-        document.addEventListener('DOMContentLoaded', function() {
-            // Resize iframes based on content
-            const iframes = document.querySelectorAll('iframe');
-            iframes.forEach(iframe => {
-                iframe.onload = function() {
-                    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-                }
-            });
-        });
+        document.addEventListener('DOMContentLoaded', function() {{
+            var iframes = document.querySelectorAll('iframe');
+            for (var i = 0; i < iframes.length; i++) {{
+                iframes[i].onload = function() {{
+                    this.style.height = this.contentWindow.document.body.scrollHeight + 'px';
+                }};
+            }}
+        }});
     </script>
 </body>
 </html>
 """
-        with open(f"{self.OUTPUT_PATH}/index.html", "w") as f:
+        with open("docs/index.html", "w") as f:
             f.write(html_content)
 
+    def create_markdown_docs(self):
+        """Create markdown documentation with tracking badges"""
+        readme_content = f"""
+# Smart Home Energy Optimization System
 
-# Project structure
+{self.badges.generate_badge_markdown("index", 
+                                   self.badges_config["index"]["color"],
+                                   self.badges_config["index"]["title"])}
+
+## Project Overview
+An end-to-end data engineering pipeline for optimizing home energy consumption.
+
+## System Architecture
+{self.badges.generate_badge_markdown("pipeline",
+                                   self.badges_config["pipeline"]["color"],
+                                   self.badges_config["pipeline"]["title"])}
+<details>
+<summary>View Pipeline Diagram</summary>
+<iframe src="visuals/pipeline.html" width="100%" height="600px" frameborder="0"></iframe>
+</details>
+
+## Development Timeline
+{self.badges.generate_badge_markdown("timeline",
+                                   self.badges_config["timeline"]["color"],
+                                   self.badges_config["timeline"]["title"])}
+<details>
+<summary>View Project Timeline</summary>
+<iframe src="visuals/timeline.html" width="100%" height="400px" frameborder="0"></iframe>
+</details>
+
+## Technical Stack
+{self.badges.generate_badge_markdown("tech_stack",
+                                   self.badges_config["tech_stack"]["color"],
+                                   self.badges_config["tech_stack"]["title"])}
+<details>
+<summary>View Tech Stack</summary>
+<iframe src="visuals/tech_stack.html" width="100%" height="500px" frameborder="0"></iframe>
+</details>
 """
-project/
-├── src/
-│   ├── visualization_generator.py
-│   └── visualizations/
-│       ├── pipeline.py
-│       ├── timeline.py
-│       └── tech_stack.py
-├── docs/
-│   ├── README.md
-│   ├── index.html
-│   └── visuals/
-│       ├── pipeline.html
-│       ├── timeline.html
-│       └── tech_stack.html
-├── templates/
-│   └── base.html
-└── README.md
-"""
+        with open("docs/README.md", "w") as f:
+            f.write(readme_content)
+
+    def generate_documentation(self):
+        """Generate all documentation files"""
+        self.generate_visuals()
+        self.create_html_index()
+        self.create_markdown_docs()
+
+        # Create .nojekyll file for GitHub Pages
+        with open("docs/.nojekyll", "w") as f:
+            pass
+
 
 # Usage
 if __name__ == "__main__":
