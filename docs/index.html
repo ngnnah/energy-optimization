@@ -1,77 +1,172 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Smart Home Energy Optimization System</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f8fafc;
-        }
-        .visual-container {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .badge-container {
-            margin: 10px 0;
-            padding: 5px;
-            background: #f1f5f9;
-            border-radius: 4px;
-            display: inline-block;
-        }
-        iframe {
-            border: none;
-            width: 100%;
-            height: 600px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Smart Home Energy Optimization System</h1>
-    <div class="badge-container">
-        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fhttps://ngnnah.github.io/energy-optimization%2Findex&count_bg=%2379C83D&title_bg=%23555555&title=total_visits&edge_flat=false" alt="total_visits" />
-    </div>
-    
-    <div class="visual-container">
-        <h2>System Architecture</h2>
-        <div class="badge-container">
-            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fhttps://ngnnah.github.io/energy-optimization%2Fpipeline&count_bg=%23FF6B6B&title_bg=%23555555&title=pipeline_views&edge_flat=false" alt="pipeline_views" />
-        </div>
-        <iframe src="visuals/pipeline.html"></iframe>
-    </div>
-
-    <div class="visual-container">
-        <h2>Development Timeline</h2>
-        <div class="badge-container">
-            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fhttps://ngnnah.github.io/energy-optimization%2Ftimeline&count_bg=%234ECDC4&title_bg=%23555555&title=timeline_views&edge_flat=false" alt="timeline_views" />
-        </div>
-        <iframe src="visuals/timeline.html"></iframe>
-    </div>
-
-    <div class="visual-container">
-        <h2>Technical Stack</h2>
-        <div class="badge-container">
-            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fhttps://ngnnah.github.io/energy-optimization%2Ftech_stack&count_bg=%2345B7D1&title_bg=%23555555&title=stack_views&edge_flat=false" alt="stack_views" />
-        </div>
-        <iframe src="visuals/tech_stack.html"></iframe>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var iframes = document.querySelectorAll('iframe');
-            for (var i = 0; i < iframes.length; i++) {
-                iframes[i].onload = function() {
-                    this.style.height = this.contentWindow.document.body.scrollHeight + 'px';
-                };
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Smart Home Energy Optimization System</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f8fafc;
             }
-        });
-    </script>
-</body>
-</html>
+            .nav-menu {
+                background: #1e293b;
+                padding: 1rem;
+                border-radius: 8px;
+                margin-bottom: 2rem;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+            .nav-menu a {
+                color: white;
+                text-decoration: none;
+                padding: 0.5rem 1rem;
+                margin: 0 0.5rem;
+                border-radius: 4px;
+                transition: background 0.3s;
+            }
+            .nav-menu a:hover {
+                background: #334155;
+            }
+            .visual-container {
+                background: white;
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px 0;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+            .badge-container {
+                margin: 10px 0;
+                padding: 5px;
+                background: #f1f5f9;
+                border-radius: 4px;
+                display: inline-block;
+            }
+            .section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+            .view-full-page {
+                background: #0ea5e9;
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 4px;
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: background 0.3s;
+            }
+            .view-full-page:hover {
+                background: #0284c7;
+            }
+            iframe {
+                border: none;
+                width: 100%;
+                height: 600px;
+                border-radius: 4px;
+            }
+            .metrics {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                margin: 1rem 0;
+            }
+            .metric-card {
+                background: white;
+                padding: 1rem;
+                border-radius: 4px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="nav-menu">
+            <a href="#overview">Overview</a>
+            <a href="#pipeline">Pipeline</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#tech-stack">Tech Stack</a>
+            <a href="https://github.com/ngnnah/energy-optimization" target="_blank">GitHub</a>
+        </div>
+
+        <h1 id="overview">Smart Home Energy Optimization System</h1>
+        <div class="badge-container">
+            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fngnnah.github.io/energy-optimization%2Findex&count_bg=%2379C83D&title_bg=%23555555&title=total_visits&edge_flat=false" alt="total_visits" />
+        </div>
+
+        <div class="metrics">
+            <div class="metric-card">
+                <h3>Development Time</h3>
+                <p>16 weeks</p>
+            </div>
+            <div class="metric-card">
+                <h3>Core Components</h3>
+                <p>4 modules</p>
+            </div>
+            <div class="metric-card">
+                <h3>Data Sources</h3>
+                <p>3 integrations</p>
+            </div>
+        </div>
+        
+        <div class="visual-container" id="pipeline">
+            <div class="section-header">
+                <h2>System Architecture</h2>
+                <a href="visuals/pipeline.html" class="view-full-page" target="_blank">View Full Page</a>
+            </div>
+            <div class="badge-container">
+                <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fngnnah.github.io/energy-optimization%2Fpipeline&count_bg=%23FF6B6B&title_bg=%23555555&title=pipeline_views&edge_flat=false" alt="pipeline_views" />
+            </div>
+            <iframe src="visuals/pipeline.html"></iframe>
+        </div>
+
+        <div class="visual-container" id="timeline">
+            <div class="section-header">
+                <h2>Development Timeline</h2>
+                <a href="visuals/timeline.html" class="view-full-page" target="_blank">View Full Page</a>
+            </div>
+            <div class="badge-container">
+                <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fngnnah.github.io/energy-optimization%2Ftimeline&count_bg=%234ECDC4&title_bg=%23555555&title=timeline_views&edge_flat=false" alt="timeline_views" />
+            </div>
+            <iframe src="visuals/timeline.html"></iframe>
+        </div>
+
+        <div class="visual-container" id="tech-stack">
+            <div class="section-header">
+                <h2>Technical Stack</h2>
+                <a href="visuals/tech_stack.html" class="view-full-page" target="_blank">View Full Page</a>
+            </div>
+            <div class="badge-container">
+                <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fngnnah.github.io/energy-optimization%2Ftech_stack&count_bg=%2345B7D1&title_bg=%23555555&title=stack_views&edge_flat=false" alt="stack_views" />
+            </div>
+            <iframe src="visuals/tech_stack.html"></iframe>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Smooth scrolling for navigation
+                document.querySelectorAll('.nav-menu a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+
+                // Iframe height adjustment
+                var iframes = document.querySelectorAll('iframe');
+                for (var i = 0; i < iframes.length; i++) {
+                    iframes[i].onload = function() {
+                        this.style.height = this.contentWindow.document.body.scrollHeight + 'px';
+                    };
+                }
+            });
+        </script>
+    </body>
+    </html>
+    
