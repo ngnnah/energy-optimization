@@ -169,8 +169,8 @@ An end-to-end data engineering pipeline for optimizing home energy consumption t
 ```
 energy-optimization/
 ├── src/
-│   ├── generate_mermaid_diagrams.py    # Handles both README and diagram integration
-│   ├── generate_dashboard.py           # Handles main dashboard UI docs/index.html
+│   ├── generate_docs.py    # Handles both README and diagram integration into main dashboard
+│   ├── generate_dashboard.py           # Handles main dashboard UI = docs/index.html
 │   ├── data_collection/
 │   │   ├── weather_api.py
 │   │   └── smart_meter.py
