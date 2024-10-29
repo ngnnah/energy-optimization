@@ -610,100 +610,100 @@ class ProjectDocumentation:
     def create_root_readme(self):
         """Create root README.md with emojis and proper markdown formatting"""
         readme_content = f"""
-    # ⚡ Smart Home Energy Optimization System
+# ⚡ Smart Home Energy Optimization System
 
-    {self.badges.generate_badge_markdown("index", 
-                                    self.badges_config["index"]["color"],
-                                    self.badges_config["index"]["title"])}
+{self.badges.generate_badge_markdown("index", 
+                                self.badges_config["index"]["color"],
+                                self.badges_config["index"]["title"])}
 
-    ## 🎯 Project Overview
-    An end-to-end data engineering pipeline for optimizing home energy consumption through real-time monitoring, analysis, and ML-powered recommendations.
+## 🎯 Project Overview
+An end-to-end data engineering pipeline for optimizing home energy consumption through real-time monitoring, analysis, and ML-powered recommendations.
 
-    ## 🏗️ System Architecture
-    {self.badges.generate_badge_markdown("visuals/pipeline",
-                                    self.badges_config["visuals/pipeline"]["color"],
-                                    self.badges_config["visuals/pipeline"]["title"])}
+## 🏗️ System Architecture
+{self.badges.generate_badge_markdown("visuals/pipeline",
+                                self.badges_config["visuals/pipeline"]["color"],
+                                self.badges_config["visuals/pipeline"]["title"])}
 
-    [![Architecture](visuals/pipeline.html)](visuals/pipeline.html)
+[![Architecture](visuals/pipeline.html)](visuals/pipeline.html)
 
-    ## ⏱️ Development Timeline
-    {self.badges.generate_badge_markdown("visuals/timeline",
-                                    self.badges_config["visuals/timeline"]["color"],
-                                    self.badges_config["visuals/timeline"]["title"])}
+## ⏱️ Development Timeline
+{self.badges.generate_badge_markdown("visuals/timeline",
+                                self.badges_config["visuals/timeline"]["color"],
+                                self.badges_config["visuals/timeline"]["title"])}
 
-    [![Timeline](visuals/timeline.html)](visuals/timeline.html)
+[![Timeline](visuals/timeline.html)](visuals/timeline.html)
 
-    ## 🔧 Technical Stack
-    {self.badges.generate_badge_markdown("visuals/tech_stack",
-                                    self.badges_config["visuals/tech_stack"]["color"],
-                                    self.badges_config["visuals/tech_stack"]["title"])}
+## 🔧 Technical Stack
+{self.badges.generate_badge_markdown("visuals/tech_stack",
+                                self.badges_config["visuals/tech_stack"]["color"],
+                                self.badges_config["visuals/tech_stack"]["title"])}
 
-    [![Tech Stack](visuals/tech_stack.html)](visuals/tech_stack.html)
+[![Tech Stack](visuals/tech_stack.html)](visuals/tech_stack.html)
 
-    ## 📊 Project Progress
-    {self.badges.generate_badge_markdown("visuals/progress",
-                                    self.badges_config["visuals/progress"]["color"],
-                                    self.badges_config["visuals/progress"]["title"])}
+## 📊 Project Progress
+{self.badges.generate_badge_markdown("visuals/progress",
+                                self.badges_config["visuals/progress"]["color"],
+                                self.badges_config["visuals/progress"]["title"])}
 
-    [![Progress](visuals/progress.html)](visuals/progress.html)
+[![Progress](visuals/progress.html)](visuals/progress.html)
 
-    ## 🎯 Milestones
-    {self.badges.generate_badge_markdown("visuals/milestones",
-                                    self.badges_config["visuals/milestones"]["color"],
-                                    self.badges_config["visuals/milestones"]["title"])}
+## 🎯 Milestones
+{self.badges.generate_badge_markdown("visuals/milestones",
+                                self.badges_config["visuals/milestones"]["color"],
+                                self.badges_config["visuals/milestones"]["title"])}
 
-    [![Milestones](visuals/milestones.html)](visuals/milestones.html)
+[![Milestones](visuals/milestones.html)](visuals/milestones.html)
 
-    ## 🚀 Quick Links
-    - [Interactive Documentation](https://ngnnah.github.io/energy-optimization/)
-    - [System Architecture](https://ngnnah.github.io/energy-optimization/visuals/pipeline.html)
-    - [Development Timeline](https://ngnnah.github.io/energy-optimization/visuals/timeline.html)
-    - [Technical Stack](https://ngnnah.github.io/energy-optimization/visuals/tech_stack.html)
-    - [Progress Tracker](https://ngnnah.github.io/energy-optimization/visuals/progress.html)
-    - [Milestone Tracker](https://ngnnah.github.io/energy-optimization/visuals/milestones.html)
+## 🚀 Quick Links
+- [Interactive Documentation](https://ngnnah.github.io/energy-optimization/)
+- [System Architecture](https://ngnnah.github.io/energy-optimization/visuals/pipeline.html)
+- [Development Timeline](https://ngnnah.github.io/energy-optimization/visuals/timeline.html)
+- [Technical Stack](https://ngnnah.github.io/energy-optimization/visuals/tech_stack.html)
+- [Progress Tracker](https://ngnnah.github.io/energy-optimization/visuals/progress.html)
+- [Milestone Tracker](https://ngnnah.github.io/energy-optimization/visuals/milestones.html)
 
-    ## 📈 Project Metrics
-    - 🕒 Development Time: 16 weeks
-    - 🔨 Core Components: 4 modules
-    - 📊 Data Sources: 3 integrations
-    - 🎯 Key Features: 12 milestones
+## 📈 Project Metrics
+- 🕒 Development Time: 16 weeks
+- 🔨 Core Components: 4 modules
+- 📊 Data Sources: 3 integrations
+- 🎯 Key Features: 12 milestones
 
-    ## 🛠️ Local Development
-    ```bash
-    # Install dependencies
-    pip install plotly pandas networkx
+## 🛠️ Local Development
+```bash
+# Install dependencies
+pip install plotly pandas networkx
 
-    # Generate documentation
-    python src/visualization_generator.py
-    ```
+# Generate documentation
+python src/visualization_generator.py
+```
 
-    ## 📝 Documentation
-    Visit our [Interactive Documentation](https://ngnnah.github.io/energy-optimization/) for:
-    - Detailed system architecture
-    - Development timeline
-    - Technical stack overview
-    - Progress tracking
-    - Milestone updates
+## 📝 Documentation
+Visit our [Interactive Documentation](https://ngnnah.github.io/energy-optimization/) for:
+- Detailed system architecture
+- Development timeline
+- Technical stack overview
+- Progress tracking
+- Milestone updates
 
-    ## 🔄 Current Status
-    - ✅ Environment Setup
-    - 🟡 Data Pipeline Implementation
-    - ⏳ Storage Layer Design
-    - 📅 Analytics Module (Upcoming)
+## 🔄 Current Status
+- ✅ Environment Setup
+- 🟡 Data Pipeline Implementation
+- ⏳ Storage Layer Design
+- 📅 Analytics Module (Upcoming)
 
-    ## 📊 Progress Overview
-    | Module | Status | Completion |
-    |--------|---------|------------|
-    | Foundation | In Progress | 60% |
-    | Analytics | Planned | 0% |
-    | Integration | Planned | 0% |
-    | UI/Dashboard | Planned | 0% |
+## 📊 Progress Overview
+| Module | Status | Completion |
+|--------|---------|------------|
+| Foundation | In Progress | 60% |
+| Analytics | Planned | 0% |
+| Integration | Planned | 0% |
+| UI/Dashboard | Planned | 0% |
 
-    ## 🤝 Contributing
-    Interested in contributing? Check our [issues page](https://github.com/ngnnah/energy-optimization/issues) for current tasks and improvements.
+## 🤝 Contributing
+Interested in contributing? Check our [issues page](https://github.com/ngnnah/energy-optimization/issues) for current tasks and improvements.
 
-    ## 📫 Contact
-    For questions or suggestions, please [open an issue](https://github.com/ngnnah/energy-optimization/issues/new).
+## 📫 Contact
+For questions or suggestions, please [open an issue](https://github.com/ngnnah/energy-optimization/issues/new).
     """
         with open("docs/README.md", "w") as f:
             f.write(readme_content)
