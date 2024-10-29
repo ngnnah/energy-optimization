@@ -1,8 +1,4 @@
 # src/visualization_generator.py
-import plotly.graph_objects as go
-import plotly.express as px
-import networkx as nx
-import pandas as pd
 import os
 from badge_generator import DocumentationBadges
 

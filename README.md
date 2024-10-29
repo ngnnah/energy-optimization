@@ -4,8 +4,6 @@ View the interactive documentation at: https://ngnnah.github.io/energy-optimizat
 
 ## Local Development
 ```bash
-# Install dependencies
-pip install plotly pandas networkx
 
 # Generate documentation
 python src/visualization_generator.py
