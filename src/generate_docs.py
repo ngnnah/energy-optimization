@@ -55,14 +55,14 @@ graph TD
 
     %% Top Row - Scale nodes with more content
     F[🚀 Foundation<br/>Module]:::phase --> |Data Flow| A[🧠 Analytics<br/>Module]:::phase
-    
+
     %% Bottom Row
     I[⚡ Integration<br/>Module]:::phase --> |User Flow| U[📊 UI/Dashboard<br/>Module]:::phase
-    
+
     %% Vertical Connections with descriptive labels
     F --> |Processing| I
     A --> |Results| U
-    
+
     %% Components in each module with emojis and detailed text
     F --> F1[🔄 ETL Pipeline<br/>Data Storage<br/>API Integration]:::module
     A --> A1[📈 ML Models<br/>Time Series<br/>Predictions]:::module
@@ -74,7 +74,7 @@ graph TD
     style A fill:#4D96FF,stroke:#4D96FF,color:#fff
     style I fill:#6C4AB6,stroke:#6C4AB6,color:#fff
     style U fill:#00D7FF,stroke:#00D7FF,color:#fff
-    
+
     %% Module styling
     style F1 fill:#FF92E3,stroke:#FF92E3,color:#fff
     style A1 fill:#72AAFF,stroke:#72AAFF,color:#fff
